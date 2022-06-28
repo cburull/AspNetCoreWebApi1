@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>People</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <script>
+
+        let people;
+        get();
+        function log() {
+            for (p of people) {
+                console.log(p);
+            }
+        }
+
+        //function get(id = "") {
+        //    const response = axios.get(`/api/people/${id}`).then((response) => { people = response.data; });
+        //}
+
+        async function get(id="") {
+            const response = await axios.get(`/api/people/${id}`);
+            people = response.data;
+        }
+
+        async function del(id) {
+            if (!id) return;
+            const response = await axios.delete(`/api/people/${id}`);
+            people = response.data;
+        }
+
+        async function add(firstname, lastname, age) {
+            if (!firstname || !lastname || !age) return;
+            const response = await axios.post('/api/people', { firstname: firstname, lastname: lastname, age: age });
+            people = response.data;
+        }
+
+        async function edit(id, firstname, lastname, age) {
+            if (!id, !firstname || !lastname || !age) return;
+            const response = await axios.patch('/api/people', { id: id, firstname: firstname, lastname: lastname, age: age });
+            people = response.data;
+        }
+
+
+        //async function db(method, data, url) {
+        //    const obj = {
+        //        method: method,
+        //        url: url ? url : '/api/people'
+        //    }
+        //    if (data) obj.data = data;
+        //    return await axios(obj).data;
+        //}
+    </script>
+</body>
+</html>
